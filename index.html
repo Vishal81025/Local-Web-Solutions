@@ -1313,6 +1313,7 @@
         /* ─── CONTACT ─────────────────────────────────────────────── */
         #contact {
             background: #050c1a;
+            
         }
 
         .contact-strip-bg {
@@ -1414,6 +1415,7 @@
             border: 1px solid rgba(255, 255, 255, .1);
             backdrop-filter: blur(20px);
             box-shadow: 0 20px 60px rgba(0, 0, 0, .5);
+            
         }
 
         .contact-form h3 {
@@ -2583,9 +2585,11 @@
                 </div>
                 <div class="contact-form">
                     <h3>Send Us a Message</h3>
-                    <form  action="https://formspree.io/f/mreaypgl"
-                                      method="POST" id="leadForm">
+                    <form  action="https://formspree.io/f/xvzbvkaq" method="POST"id="leadForm">
                         <div class="form-group">
+                            <p id="formStatus" style="display:none; margin-top:15px; color:green; font-weight:600;">
+  ✅ Thank you! We will contact you shortly.
+</p>
                             <label>Your Name *</label>
                             <input type="text" name="userName" required placeholder="Rajesh Kumar">
                         </div>
@@ -2714,9 +2718,44 @@
                 alert("Could not connect to the server. Please check if your backend is running.");
             }
         });
+
+        
     </script>
+    <script>
+  const form = document.getElementById("leadForm");
+  const status = document.getElementById("formStatus");
+
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch(form.action, {
+        method: "POST",
+        body: formData,
+        headers: {
+          "Accept": "application/json"
+        }
+      });
+
+      if (response.ok) {
+        form.reset();
+        status.style.display = "block";
+        status.style.color = "green";
+        status.innerText = "✅ Thank you! We will contact you shortly.";
+      } else {
+        status.style.display = "block";
+        status.style.color = "red";
+        status.innerText = "❌ Something went wrong. Please try again.";
+      }
+    } catch (error) {
+      status.style.display = "block";
+      status.style.color = "red";
+      status.innerText = "❌ Network error. Please try again later.";
+    }
+  });
+</script>
 </body>
 
 </html>
-
-
